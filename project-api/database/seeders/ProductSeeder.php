@@ -18,11 +18,6 @@ class ProductSeeder extends Seeder
         $options = [
             ProductType::TOOL => [
                 [
-                    'name' => 'Combination wrench set',
-                    'price' => 200.00,
-                    'description' => 'Basic hand tool.',
-                ],
-                [
                     'name' => 'Diagonal cutting plier',
                     'price' => 69.80,
                     'description' => 'Diagonal cutting pliers are used for cutting wire. They cut wire by indenting and wedging a cable apart (as opposed to shearing like scissors).',
@@ -55,11 +50,6 @@ class ProductSeeder extends Seeder
                     'price' => 59800.00,
                     'description' => 'A forklift (also called industrial truck, lift truck, jitney, hi-lo, fork truck, fork hoist, and forklift truck) is a powered industrial truck used to lift and move materials over short distances.',
                 ],
-                [
-                    'name' => 'Tractor',
-                    'price' => 59800.00,
-                    'description' => 'A forklift (also called industrial truck, lift truck, jitney, hi-lo, fork truck, fork hoist, and forklift truck) is a powered industrial truck used to lift and move materials over short distances.',
-                ],
             ],
 
             ProductType::WEAR => [
@@ -77,11 +67,6 @@ class ProductSeeder extends Seeder
                     'name' => ProductWearType::SAFETY_SHOES,
                     'price' => 235.00,
                     'description' => 'Safety shoes are personal protective equipment (PPE) for foot protection at workplaces.',
-                ],
-                [
-                    'name' => ProductWearType::SAFETY_VEST,
-                    'price' => 18.99,
-                    'description' => 'Safety vests is to help alert people that another human is present in their field of vision.',
                 ],
             ],
         ];

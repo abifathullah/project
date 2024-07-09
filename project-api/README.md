@@ -62,6 +62,11 @@ docker exec -ti [container id/name] bash
     php artisan db:seed
     ````
 
+    4. Run command to add extra product.
+    ````
+    php artisan add-extra-product
+    ````
+
 ## Additional
 1. Run pint
 ````
