@@ -22,7 +22,9 @@ class ProductTest extends TestCase
      */
     public function test_can_create_a_product(): void
     {
-        $category = ProductCategory::factory()->create(['name' => 'Scanner']);
+        $category = ProductCategory::factory()->create([
+            'name' => 'Scanner',
+        ]);
 
         $response = $this->postJson('/api/products', [
             'name' => 'ScanTool',
@@ -47,7 +49,10 @@ class ProductTest extends TestCase
      */
     public function test_can_update_a_product(): void
     {
-        $category = ProductCategory::factory()->create(['name' => 'Scanner']);
+        $category = ProductCategory::factory()->create([
+            'name' => 'Scanner',
+        ]);
+
         $product = Product::factory()->create([
             'name' => 'ScanTool',
             'product_category_id' => $category->id,
@@ -79,7 +84,10 @@ class ProductTest extends TestCase
      */
     public function test_can_delete_a_product(): void
     {
-        $category = ProductCategory::factory()->create(['name' => 'Scanner']);
+        $category = ProductCategory::factory()->create([
+            'name' => 'Scanner',
+        ]);
+
         $product = Product::factory()->create([
             'name' => 'ScanTool',
             'product_category_id' => $category->id,
@@ -97,7 +105,10 @@ class ProductTest extends TestCase
      */
     public function test_can_show_a_product(): void
     {
-        $category = ProductCategory::factory()->create(['name' => 'Scanner']);
+        $category = ProductCategory::factory()->create([
+            'name' => 'Scanner',
+        ]);
+
         $product = Product::factory()->create([
             'name' => 'ScanTool',
             'product_category_id' => $category->id,
@@ -122,8 +133,11 @@ class ProductTest extends TestCase
      */
     public function test_can_list_products_with_category(): void
     {
-        $category = ProductCategory::factory()->create(['name' => 'Scanner']);
-        $products = Product::factory()->count(3)->create([
+        $category = ProductCategory::factory()->create([
+            'name' => 'Scanner',
+        ]);
+
+        Product::factory()->count(3)->create([
             'product_category_id' => $category->id,
         ]);
 

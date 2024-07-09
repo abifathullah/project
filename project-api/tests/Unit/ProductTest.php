@@ -16,7 +16,9 @@ class ProductTest extends TestCase
     {
         parent::setUp();
 
-        $this->category = ProductCategory::factory()->create(['name' => ProductType::TOOL]);
+        $this->category = ProductCategory::factory()->create([
+            'name' => ProductType::TOOL,
+        ]);
 
         $this->product = Product::factory()->create([
             'name' => 'Diagonal cutting plier',
