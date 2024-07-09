@@ -18,6 +18,11 @@ class ProductSeeder extends Seeder
         $options = [
             ProductType::TOOL => [
                 [
+                    'name' => 'Combination wrench set',
+                    'price' => 200.00,
+                    'description' => 'Basic hand tool.',
+                ],
+                [
                     'name' => 'Diagonal cutting plier',
                     'price' => 69.80,
                     'description' => 'Diagonal cutting pliers are used for cutting wire. They cut wire by indenting and wedging a cable apart (as opposed to shearing like scissors).',
@@ -47,6 +52,11 @@ class ProductSeeder extends Seeder
                 ],
                 [
                     'name' => 'Forklift',
+                    'price' => 59800.00,
+                    'description' => 'A forklift (also called industrial truck, lift truck, jitney, hi-lo, fork truck, fork hoist, and forklift truck) is a powered industrial truck used to lift and move materials over short distances.',
+                ],
+                [
+                    'name' => 'Tractor',
                     'price' => 59800.00,
                     'description' => 'A forklift (also called industrial truck, lift truck, jitney, hi-lo, fork truck, fork hoist, and forklift truck) is a powered industrial truck used to lift and move materials over short distances.',
                 ],
