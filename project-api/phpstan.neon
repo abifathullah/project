@@ -1,0 +1,22 @@
+includes:
+    - ./vendor/larastan/larastan/extension.neon
+
+parameters:
+    level: max
+
+    paths:
+        - app/
+        - database/
+        - routes/
+        - resources/views/
+        - tests/
+
+    parallel:
+        maximumNumberOfProcesses: 8
+        processTimeout: 600.0
+
+    excludePaths:
+        - %rootDir%/../../../vendor
+
+    bootstrapFiles:
+        - %rootDir%/../../../bootstrap/app.php
