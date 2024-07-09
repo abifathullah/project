@@ -38,6 +38,10 @@ class SecurityTest extends TestCase
     {
         $user = User::factory()->create();
 
+        if (! $user instanceof \App\Models\User) {
+            $this->fail('Expected instance of User, found ' . get_class($user));
+        }
+
         // Perform 60 requests to reach the rate limit
         for ($i = 0; $i < 60; $i++) {
             $response = $this->actingAs($user, 'sanctum')->get('/api/users');
@@ -59,8 +63,17 @@ class SecurityTest extends TestCase
         $response->assertHeader('X-Content-Type-Options', 'nosniff');
         $response->assertHeader('X-Frame-Options', 'DENY');
         $response->assertHeader('X-XSS-Protection', '1; mode=block');
-        $response->assertHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
-        $response->assertHeader('Referrer-Policy', 'no-referrer-when-downgrade');
-        $response->assertHeader('Content-Security-Policy', 'default-src \'self\'');
+        $response->assertHeader(
+            'Strict-Transport-Security',
+            'max-age=31536000; includeSubDomains; preload'
+        );
+        $response->assertHeader(
+            'Referrer-Policy',
+            'no-referrer-when-downgrade'
+        );
+        $response->assertHeader(
+            'Content-Security-Policy',
+            'default-src \'self\''
+        );
     }
 }
