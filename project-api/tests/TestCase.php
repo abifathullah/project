@@ -36,8 +36,6 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * @return static
-     *
-     * @throws Throwable
      */
     protected function createTestDatabase(): static
     {
@@ -50,7 +48,7 @@ abstract class TestCase extends BaseTestCase
 
         $result = $query->fetchObject();
 
-        if (!$result) {
+        if (! $result) {
             $sql = 'CREATE DATABASE ' . $databaseName;
             $pdo->exec($sql);
         }
@@ -59,23 +57,28 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-    * Set the test database connection.
-    */
+     * Set the test database connection.
+     *
+     * @return void
+     */
     protected function setTestDatabaseConnection(): void
     {
         config()->set('database.connections.mysql.database', config('database.test_database'));
 
         DB::purge('mysql');
+
         DB::reconnect('mysql');
     }
 
     /**
-    * Set the test database connection.
-    */
+     * Set the test database connection.
+     *
+     * @return void
+     */
     protected function prepareTestDatabase(): void
     {
-        $this->artisan('migrate:fresh')->run();
+        $this->artisan('migrate:fresh');
 
-        $this->artisan('db:seed')->run();
+        $this->artisan('db:seed');
     }
 }
