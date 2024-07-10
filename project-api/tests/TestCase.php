@@ -4,8 +4,78 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\DB;
 
 abstract class TestCase extends BaseTestCase
 {
     use DatabaseTransactions;
+
+    /**
+     * @var bool
+     */
+    protected static bool $initialized = false;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (! self::$initialized) {
+
+            $this->createTestDatabase();
+
+            $this->setTestDatabaseConnection();
+
+            $this->prepareTestDatabase();
+
+            self::$initialized = true;
+        }
+    }
+
+    /**
+     * @return static
+     *
+     * @throws Throwable
+     */
+    protected function createTestDatabase(): static
+    {
+        $pdo = DB::getPdo();
+
+        $databaseName = config('database.test_database');
+        $query = $pdo->prepare('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = :database_name');
+
+        $query->execute(['database_name' => $databaseName]);
+
+        $result = $query->fetchObject();
+
+        if (!$result) {
+            $sql = 'CREATE DATABASE ' . $databaseName;
+            $pdo->exec($sql);
+        }
+
+        return $this;
+    }
+
+    /**
+    * Set the test database connection.
+    */
+    protected function setTestDatabaseConnection(): void
+    {
+        config()->set('database.connections.mysql.database', config('database.test_database'));
+
+        DB::purge('mysql');
+        DB::reconnect('mysql');
+    }
+
+    /**
+    * Set the test database connection.
+    */
+    protected function prepareTestDatabase(): void
+    {
+        $this->artisan('migrate:fresh')->run();
+
+        $this->artisan('db:seed')->run();
+    }
 }
