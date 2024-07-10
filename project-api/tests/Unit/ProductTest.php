@@ -4,11 +4,13 @@ namespace Tests\Unit;
 
 use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Utilities\Enums\ProductType;
 use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
+    protected string $newProductCategory;
+    protected string $newProduct;
+
     protected ProductCategory $category;
     protected Product $product;
 
@@ -16,12 +18,16 @@ class ProductTest extends TestCase
     {
         parent::setUp();
 
+        $this->newProductCategory = 'Test tool';
+
+        $this->newProduct = 'Test pen';
+
         $this->category = ProductCategory::factory()->create([
-            'name' => ProductType::TOOL,
+            'name' => $this->newProductCategory,
         ]);
 
         $this->product = Product::factory()->create([
-            'name' => 'Diagonal cutting plier',
+            'name' => $this->newProduct,
             'product_category_id' => $this->category->id,
         ]);
 
@@ -34,7 +40,7 @@ class ProductTest extends TestCase
     public function test_that_product_belongs_to_a_category(): void
     {
         $this->assertInstanceOf(ProductCategory::class, $this->product->category);
-        $this->assertEquals(ProductType::TOOL, $this->product->category->name);
+        $this->assertEquals($this->newProductCategory, $this->product->category->name);
     }
 
     /**
@@ -43,6 +49,6 @@ class ProductTest extends TestCase
     public function test_that_product_category_has_products(): void
     {
         $this->assertTrue($this->category->products->contains($this->product));
-        $this->assertEquals('Diagonal cutting plier', $this->product->name);
+        $this->assertEquals($this->newProduct, $this->product->name);
     }
 }

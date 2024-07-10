@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\DB;
 
-abstract class TestCase extends BaseTestCase
+class TestCase extends BaseTestCase
 {
     use DatabaseTransactions;
 
