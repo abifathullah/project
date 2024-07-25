@@ -7,6 +7,7 @@ use App\Models\ProductCategory;
 use App\Utilities\Enums\Products\ProductWearType;
 use App\Utilities\Enums\ProductType;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
@@ -74,11 +75,13 @@ class ProductSeeder extends Seeder
         foreach ($options as $optionKey => $optionVal) {
             $productCategory = ProductCategory::firstOrCreate([
                 'name' => $optionKey,
+                'slug' => Str::slug($optionKey, '_'),
             ]);
 
             foreach ($optionVal as $optionItemKey => $optionItemVal) {
                 Product::firstOrCreate([
                     'name' => $optionItemVal['name'],
+                    'slug' => Str::slug($optionItemVal['name'], '_'),
                     'product_category_id' => $productCategory->id,
                 ], [
                     'price' => $optionItemVal['price'],

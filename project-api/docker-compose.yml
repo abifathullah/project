@@ -35,7 +35,7 @@ services:
       - "3306:3306"
 
   nginx:
-    image: nginx:latest
+    image: nginx:1.27.0
     container_name: project-nginx
     ports:
       - "1000:80"

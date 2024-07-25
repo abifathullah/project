@@ -81,6 +81,9 @@ php artisan phpstan
 php artisan test
 ````
 
+## Good to know
+
+1. Usage of database column `slug` is referring to column `name`.
 
 ## Issue
 

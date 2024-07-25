@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Concerns;
 use App\Helpers\ResponseHelper;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 trait CrudOperations
 {
@@ -35,6 +37,12 @@ trait CrudOperations
     public function store(Request $request): JsonResponse
     {
         $validatedData = $request->validate($this->rules());
+
+        $response = $this->checkSlugCreation($validatedData);
+        if ($response) {
+            return $response;
+        }
+
         $modelInstance = (new $this->model())->create($validatedData);
 
         return ResponseHelper::success($modelInstance, 'Resource created successfully', 201);
@@ -78,6 +86,12 @@ trait CrudOperations
     {
         $validatedData = $request->validate($this->rules());
         $modelInstance = (new $this->model())->findOrFail($id);
+
+        $response = $this->checkSlugCreation($validatedData);
+        if ($response) {
+            return $response;
+        }
+
         $modelInstance->update($validatedData);
 
         return ResponseHelper::success($modelInstance, 'Resource updated successfully');
@@ -95,5 +109,25 @@ trait CrudOperations
         $modelInstance->delete();
 
         return ResponseHelper::success(null, 'Resource deleted successfully', 204);
+    }
+
+    /**
+     * Check if slug exists.
+    */
+    private function checkSlugCreation(array &$validatedData): ?JsonResponse
+    {
+        if (Schema::hasColumn((new $this->model())->getTable(), 'name') && Schema::hasColumn((new $this->model())->getTable(), 'slug')) {
+            $slug = Str::slug($validatedData['name'], '_');
+
+            $slugExists = (new $this->model())->where('slug', $slug)->exists();
+
+            if ($slugExists) {
+                return ResponseHelper::error('Resource with same name already exists.', 422);
+            }
+
+            $validatedData['slug'] = $slug;
+        }
+
+        return null;
     }
 }

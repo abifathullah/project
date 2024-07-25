@@ -47,7 +47,10 @@ import { useToast } from 'vue-toastification';
 export default {
     name: 'AddEditProduct',
 
-    props: ['mode', 'productId'],
+    props: [
+        'mode',
+        'productId'
+    ],
 
     data() {
         return {
@@ -65,6 +68,7 @@ export default {
         if (this.mode === 'edit') {
             this.fetchProduct();
         }
+
         this.fetchCategories();
     },
 
@@ -93,19 +97,20 @@ export default {
 
         async saveProduct() {
             try {
+                let response;
+
                 if (this.mode === 'edit') {
-                    await axios.put(`/api/products/${this.$route.params.id}`, this.product);
+                    response = await axios.put(`/api/products/${this.$route.params.id}`, this.product);
                 } else {
-                    await axios.post('/api/products', this.product);
+                    response = await axios.post('/api/products', this.product);
                 }
+
                 const toast = useToast();
-                toast.success(
-                    `${this.mode === 'edit' ? 'Product updated' : 'Product added'} successfully`
-                );
+                toast.success(response.data.message);
                 this.$router.push({ name: 'Home' });
             } catch (error) {
                 const toast = useToast();
-                toast.error(`Error ${this.mode === 'edit' ? 'updating' : 'adding'} product`);
+                toast.error(error.response.data.message);
             }
         },
     },
