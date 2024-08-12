@@ -1,11 +1,12 @@
 <template>
     <header class="navbar">
-        <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+        <img alt="logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
         <nav>
-            <RouterLink to="/home">Home</RouterLink>
-            <RouterLink v-if="showLogoutButton" to="/product/add">Add Product</RouterLink>
-            <RouterLink v-if="showLogoutButton" to="/about">About</RouterLink>
-            <v-btn v-if="showLogoutButton" @click="logout" color="primary">Logout</v-btn>
+            <p v-if="! loggedin">Product Store</p>
+            <RouterLink v-if="loggedin" to="/home">Home</RouterLink>
+            <RouterLink v-if="loggedin" to="/product/add">Add Product</RouterLink>
+            <RouterLink v-if="loggedin" to="/about">About</RouterLink>
+            <a href="#" v-if="loggedin" @click="logout" color="warning">Logout</a>
         </nav>
     </header>
 
@@ -25,7 +26,7 @@ export default {
     },
 
     computed: {
-        showLogoutButton() {
+        loggedin() {
             const currentPath = this.$route.path;
 
             if (currentPath === '/') {
@@ -39,9 +40,11 @@ export default {
     methods: {
         async logout() {
             try {
-                await axios.post('/api/logout');
-                localStorage.removeItem('token');
-                this.$router.push({ name: 'Login' });
+                if (confirm("Are you sure you want to logout?")) {
+                    await axios.post('/api/logout');
+                    localStorage.removeItem('token');
+                    this.$router.push({ name: 'Login' });
+                }
             } catch (error) {
                 console.error('Error during logout', error);
             }
@@ -53,21 +56,19 @@ export default {
 <style scoped>
 .navbar {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #a3a3a3;
     padding: 1rem;
-    box-shadow: 0 2px 4px rgba(82, 82, 82, 0.1);
+    box-shadow: 0 2px 4px #fff;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
     width: 100%;
+    background-color: #171717;
 }
 
 .logo {
-    height: 50px;
+    height: 25px;
 }
 
 nav {
@@ -92,7 +93,6 @@ nav a:hover {
 
 .content {
     width: 100%;
-    background-color: #ffffff;
     margin-top: 80px;
     box-sizing: border-box;
 }

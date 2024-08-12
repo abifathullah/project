@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <h2 class="mb-4 font-semibold text-xl text-black leading-tight">About</h2>
+        <h2 class="mb-4 font-semibold text-xl leading-tight">About</h2>
 
         <v-card class="elevation-0 border">
             <v-card-text>
@@ -43,9 +43,9 @@ export default {
         },
     },
 
-    async created() {
+    created() {
         this.versionsStore = useVersionsStore();
-        await this.versionsStore.fetchVersions();
+        this.versionsStore.fetchVersions();
         this.loading = false;
     },
 };

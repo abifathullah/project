@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <h2 class="mb-4 font-semibold text-xl text-black leading-tight">
+        <h2 class="mb-4 font-semibold text-xl leading-tight">
             <v-btn flat color="primary" @click="goBack">Back</v-btn>
             Product Detail
         </h2>

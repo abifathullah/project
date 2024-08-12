@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <h2 class="mb-4 font-semibold text-xl text-black leading-tight">Products</h2>
+        <h2 class="mb-4 font-semibold text-xl leading-tight">Products</h2>
 
         <v-row class="mb-2">
             <v-col cols="3">
@@ -119,8 +119,6 @@ export default {
                 .then((response) => {
                     this.products = response.data.data.original;
                     this.filteredProducts = this.products;
-                    const toast = useToast();
-                    toast.success(response.data.message);
                     this.loading = false;
                 })
                 .catch((error) => {

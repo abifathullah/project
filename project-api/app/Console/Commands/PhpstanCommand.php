@@ -31,7 +31,7 @@ class PhpstanCommand extends Command
         $output = null;
         $returnVar = null;
 
-        exec('vendor/bin/phpstan --memory-limit=1G', $output, $returnVar);
+        exec('vendor/bin/phpstan', $output, $returnVar);
 
         foreach ($output as $line) {
             $this->line($line);
