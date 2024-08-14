@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import productService from '../services/productService';
+import { Container } from 'semantic-ui-react';
 
 function Product() {
     const [products, setProducts] = useState([]);
@@ -39,43 +40,45 @@ function Product() {
     };
 
     return (
-        <div>
-            <h1>Product List</h1>
-            <ul>
-                {products && products.length > 0 ? (
-                    products.map(product => (
-                        <li key={product.id}>
-                            {product.name} - ${product.price}
-                            <button onClick={() => handleUpdateProduct(product.id)}>Update</button>
-                            <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
-                        </li>
-                    ))
-                ) : (
-                    <p>No products available.</p>
-                )}
-            </ul>
+        <Container>
             <div>
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={newProduct.name}
-                    onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-                />
-                <input
-                    type="text"
-                    placeholder="Description"
-                    value={newProduct.description}
-                    onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-                />
-                <input
-                    type="number"
-                    placeholder="Price"
-                    value={newProduct.price}
-                    onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
-                />
-                <button onClick={handleCreateProduct}>Create Product</button>
+                <h1>Product List</h1>
+                <ul>
+                    {products && products.length > 0 ? (
+                        products.map(product => (
+                            <li key={product.id}>
+                                {product.name} - ${product.price}
+                                <button onClick={() => handleUpdateProduct(product.id)}>Update</button>
+                                <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
+                            </li>
+                        ))
+                    ) : (
+                        <p>No products available.</p>
+                    )}
+                </ul>
+                <div>
+                    <input
+                        type="text"
+                        placeholder="Name"
+                        value={newProduct.name}
+                        onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Description"
+                        value={newProduct.description}
+                        onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                    />
+                    <input
+                        type="number"
+                        placeholder="Price"
+                        value={newProduct.price}
+                        onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+                    />
+                    <button onClick={handleCreateProduct}>Create Product</button>
+                </div>
             </div>
-        </div>
+        </Container>
     );
 }
 
