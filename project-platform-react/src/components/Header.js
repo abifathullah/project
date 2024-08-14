@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Container, Button } from 'semantic-ui-react';
+import { AppBar, Toolbar, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
@@ -13,16 +13,16 @@ const Header = () => {
   };
 
   return (
-    <Menu inverted>
-      <Container>
-        <Menu.Item header>My App</Menu.Item>
-        <Menu.Item name='home' />
-        <Menu.Item name='about' />
-        <Menu.Item position='right'>
-          <Button primary onClick={handleLogout}>Logout</Button>
-        </Menu.Item>
-      </Container>
-    </Menu>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" style={{ flexGrow: 1 }}>
+          My App
+        </Typography>
+        <Button color="inherit" onClick={() => navigate('/home')}>Home</Button>
+        <Button color="inherit" onClick={() => navigate('/about')}>About</Button>
+        <Button color="inherit" onClick={handleLogout}>Logout</Button>
+      </Toolbar>
+    </AppBar>
   );
 };
 

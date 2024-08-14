@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import productService from '../services/productService';
-import { Container } from 'semantic-ui-react';
+import { Container, Typography, TextField, Button, Box, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 function Product() {
     const [products, setProducts] = useState([]);
@@ -27,6 +29,7 @@ function Product() {
     const handleCreateProduct = async () => {
         await productService.createProduct(newProduct);
         fetchProducts();
+        setNewProduct({ name: '', description: '', price: '' }); // Clear input fields
     };
 
     const handleUpdateProduct = async (id) => {
@@ -41,43 +44,67 @@ function Product() {
 
     return (
         <Container>
-            <div>
-                <h1>Product List</h1>
-                <ul>
-                    {products && products.length > 0 ? (
-                        products.map(product => (
-                            <li key={product.id}>
-                                {product.name} - ${product.price}
-                                <button onClick={() => handleUpdateProduct(product.id)}>Update</button>
-                                <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
-                            </li>
-                        ))
-                    ) : (
-                        <p>No products available.</p>
-                    )}
-                </ul>
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Name"
-                        value={newProduct.name}
-                        onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Description"
-                        value={newProduct.description}
-                        onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
-                    />
-                    <input
-                        type="number"
-                        placeholder="Price"
-                        value={newProduct.price}
-                        onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
-                    />
-                    <button onClick={handleCreateProduct}>Create Product</button>
-                </div>
-            </div>
+            <Typography variant="h4" gutterBottom>
+                Product List
+            </Typography>
+            <Box
+                sx={{
+                    mt: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2,
+                }}
+            >
+                <TextField
+                    variant="outlined"
+                    label="Name"
+                    value={newProduct.name}
+                    onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+                />
+                <TextField
+                    variant="outlined"
+                    label="Description"
+                    value={newProduct.description}
+                    onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                />
+                <TextField
+                    variant="outlined"
+                    label="Price"
+                    type="number"
+                    value={newProduct.price}
+                    onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+                />
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleCreateProduct}
+                >
+                    Create Product
+                </Button>
+            </Box>
+            <List>
+                {products && products.length > 0 ? (
+                    products.map(product => (
+                        <ListItem key={product.id} secondaryAction={
+                            <>
+                                <IconButton edge="end" aria-label="edit" onClick={() => handleUpdateProduct(product.id)}>
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton edge="end" aria-label="delete" onClick={() => handleDeleteProduct(product.id)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </>
+                        }>
+                            <ListItemText
+                                primary={product.name}
+                                secondary={`Description: ${product.description} - Price: $${product.price}`}
+                            />
+                        </ListItem>
+                    ))
+                ) : (
+                    <Typography variant="body1">No products available.</Typography>
+                )}
+            </List>
         </Container>
     );
 }
