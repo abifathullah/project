@@ -1,8 +1,9 @@
 services:
-  react-frontend:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: project-react
     ports:
       - "3000:3000"
     volumes:
