@@ -13,7 +13,7 @@ const Login = () => {
             
             if (response.data && response.data.token) { // Ensure the response contains the token
                 localStorage.setItem('user', JSON.stringify(response.data)); // Save the entire response or just the token
-                window.location.href = '/dashboard'; // Redirect after login
+                window.location.href = '/home'; // Redirect after login
             } else {
                 console.error('Login response does not contain the expected token.');
             }

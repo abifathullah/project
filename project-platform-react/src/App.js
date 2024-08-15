@@ -11,7 +11,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/dashboard" element={
+        <Route path="/home" element={
           <ProtectedRoute>
             <Product />
           </ProtectedRoute>
